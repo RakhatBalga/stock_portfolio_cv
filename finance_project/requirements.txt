@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+beanie
+motor
+yfinance
+certifi
+python-dotenv
