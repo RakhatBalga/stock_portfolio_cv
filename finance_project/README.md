@@ -1,101 +1,89 @@
-# Stock Portfolio Tracker 📈
+# 📈 Stock Portfolio Tracker
 
-A modern full-stack web application designed to track personal stock investments. It calculates real-time portfolio metrics, profitability, and tracks individual holding performance using live market data.
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/) [![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactjs.org/) [![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/) [![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-This project demonstrates a clear separation of concerns with a RESTful API backend and a reactive, component-based frontend.
+A modern, high-performance full-stack web application designed for real-time tracking of personal stock investments. Built with a focus on seamless user experience, responsive design, and robust asynchronous data processing.
 
 ![Portfolio Screenshot](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2670&auto=format&fit=crop) _(Placeholder)_
 
-## 🚀 Features
+## 🚀 Key Features & Capabilities
 
-- **Real-Time Market Data**: Integrates with `yfinance` to fetch live stock prices and calculate up-to-date asset values.
-- **Portfolio Analytics**: Automatically calculates Total Invested, Current Portfolio Value, and Total Profit/Loss (both in USD and percentages).
-- **CRUD Operations**: Complete management (Create, Read, Update, Delete) of individual stock transactions.
-- **Smart Grouping**: Aggregates multiple transactions of the same ticker to show average buy price and total holdings.
-- **Responsive UI**: Built with Tailwind CSS, featuring a modern dark-mode aesthetic with conditional profit/loss coloring.
+- **Real-Time Market Data Integration**: Asynchronously fetches live market quotes via the `yfinance` API, ensuring users always see up-to-date asset valuations.
+- **Advanced Portfolio Analytics**: Dynamically calculates aggregated metrics including Total Capital Invested, Real-time Portfolio Value, and precise Profit/Loss margins (absolute and percentage-based).
+- **Comprehensive Asset Management**: Full CRUD capabilities for individual stock transactions, managed efficiently through a RESTful FastAPI backend.
+- **Intelligent Data Aggregation**: Automatically groups and averages multiple transactions of identical tickers to present a unified view of average cost basis and total holdings.
+- **Modern, Reactive UI**: Features a sleek, responsive dark-mode interface built with Tailwind CSS v4, utilizing glassmorphism, micro-animations, and conditional typography for financial indicators.
+- **Resilient Error Handling**: Implements graceful degradation mechanisms—if external financial APIs experience downtime or rate-limiting, the system intelligently falls back to historical purchase data safely.
 
-## 🛠️ Technology Stack
+## 🛠️ Technical Architecture
 
-**Backend**
+This project strictly adheres to a decoupled client-server architecture, ensuring scalability and maintainability.
 
-- **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python) for high-performance, asynchronous REST endpoints.
-- **Database**: **MongoDB Atlas** (NoSQL cloud database).
-- **ODM / Data Validation**: [Beanie](https://beanie-odm.dev/) & **Pydantic** for asynchronous database operations and strict type checking.
-- **External API**: `yfinance` for live stock market quotes.
+### Backend Infrastructure
 
-**Frontend**
+- **Core Framework**: Python / [FastAPI](https://fastapi.tiangolo.com/) – Chosen for its exceptional speed and native asynchronous support.
+- **Database Architecture**: MongoDB Atlas utilized as a highly scalable NoSQL data store.
+- **Data Validation & ODM**: Integrated `Beanie` and `Pydantic` for strict type enforcement, schema validation, and asynchronous MongoDB operations via `Motor`.
 
-- **Library**: **React.js** (Functions components & Hooks).
-- **Build Tool**: **Vite** for blazing fast compilation and Hot Module Replacement.
-- **Styling**: **Tailwind CSS v4** for utility-first responsive design.
-- **HTTP Client**: **Axios** for API communication.
+### Frontend Engineering
 
-## 📂 Architecture overview
+- **Library & State Management**: React (TypeScript/TSX) utilizing functional components, custom hooks, and optimized memoization.
+- **Build System**: Vite – Providing rapid HMR (Hot Module Replacement) and highly optimized production builds.
+- **Styling Architecture**: Tailwind CSS v4 for a utility-first, highly maintainable design system.
+- **Network Layer**: Axios configured for intercepted and serialized RESTful communication.
 
-The application uses a standard client-server architecture:
+## 📂 Project Structure
 
 ```text
 finance_project/
-├── backend/                  # FastAPI Application
-│   ├── main.py               # API Router, endpoints, business logic, CORS
-│   ├── database.py           # MongoDB connection lifecycle using Motor
-│   └── models.py             # Beanie/Pydantic Database schemas
-├── frontend/                 # React Application
-│   ├── src/api/axios.js      # Global Axios config pointing to backend
-│   ├── src/components/       # Reusable, dumb UI components (Buttons, Rows)
-│   ├── src/modules/          # Smart widgets handling specific data domains
-│   └── src/App.jsx           # Application state orchestrator
+├── backend/                  # Asynchronous FastAPI Service
+│   ├── main.py               # REST Endpoints, CORS config, and Business Logic
+│   ├── database.py           # MongoDB lifecycle management
+│   └── models.py             # Beanie/Pydantic schemas
+├── frontend/                 # React SPA (TypeScript)
+│   ├── src/api/axios.ts      # Configured HTTP Client
+│   ├── src/components/       # Reusable, stateless UI components
+│   ├── src/modules/          # Stateful, domain-specific data modules
+│   ├── src/pages/            # Top-level view orchestration
+│   └── src/index.css         # Tailwind v4 directives and custom theme variables
 ```
 
-## ⚙️ Getting Started
+## ⚙️ Local Development Setup
 
 ### Prerequisites
 
 - Node.js (v18+)
 - Python 3.9+
-- A MongoDB Atlas cluster URI (or local MongoDB instance)
+- MongoDB instance (Local or Atlas URI)
 
-### 1. Backend Setup
+### 1. Backend Initialization
 
 ```bash
-# Navigate to project root
 cd finance_project
-
-# Create a virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-
-# Install dependencies
+source venv/bin/activate  # Windows: venv\\Scripts\\activate
 pip install -r requirements.txt
+pip install "fastapi[standard]"
 
-# Create a .env file and add your MongoDB URL
-echo "MONGO_URL=mongodb+srv://<user>:<password>@cluster.mongodb.net/portfolio" > .env
+# Configure Environment
+echo "MONGO_URL=mongodb+srv://<user>:<password>@cluster/portfolio" > .env
 
-# Run the FastAPI server (starts on http://localhost:8000)
+# Launch Server (http://localhost:8000)
 fastapi dev backend/main.py
 ```
 
-### 2. Frontend Setup
+### 2. Frontend Initialization
 
 ```bash
-# Open a new terminal tab and navigate to the frontend folder
 cd finance_project/frontend
-
-# Install Node dependencies
 npm install
 
-# Start the Vite development server
+# Launch Vite Development Server (http://localhost:5173)
 npm run dev
 ```
 
-Visit `http://localhost:5173` to view the application!
+## 👤 Developer
 
-## 💡 Key Design Decisions
+**Rakhat Balgabekov**
 
-- **Error Handling**: Implemented graceful degradation. If Yahoo Finance fails to fetch a particular ticker/price, the backend elegantly falls back to the original purchase price (resulting in $0 profit) rather than crashing the entire portfolio page.
-- **Asynchronous DB**: Utilized `Motor` via `Beanie` in Python to prevent I/O blocking during database transactions, fully leveraging FastAPI's async capabilities.
-- **Component Modularity**: Frontend features are split into `modules` (state-aware logical blocks) and `components` (pure UI elements) for high maintainability.
-
-## 👤 Author
-
-- **Rakhat Balgabekov**
+- [GitHub Profile](https://github.com/RakhatBalga)

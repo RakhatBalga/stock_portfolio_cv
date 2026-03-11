@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -115,8 +115,10 @@ async def get_portfolio_status():
 
         report.append({
             "ticker": ticker,
+            "total_amount": data["total_amount"],
             "avg_price": round(avg_buy_price, 2),
             "current_price": round(current_price, 2),
+            "current_value": round(current_value, 2),
             "profit_usd": round(profit_usd, 2),
             "profit_percent": f"{round((profit_usd / data['total_cost']) * 100, 2)}%"
         })
