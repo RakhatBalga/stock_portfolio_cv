@@ -4,7 +4,15 @@
 
 A modern, high-performance full-stack web application designed for real-time tracking of personal stock investments. Built with a focus on seamless user experience, responsive design, and robust asynchronous data processing.
 
-![Portfolio Screenshot](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2670&auto=format&fit=crop) _(Placeholder)_
+<div align="center">
+  <img src="assets/dashboard_main.png" alt="Portfolio Dashboard" width="800">
+</div>
+
+<br />
+
+<div align="center">
+  <img src="assets/transaction_history.png" alt="Transaction History" width="800">
+</div>
 
 ## 🚀 Key Features & Capabilities
 
